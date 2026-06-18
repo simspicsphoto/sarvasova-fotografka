@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simona Sarvašová — Fotografia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F3EE;
+    --cream-dark: #EDE7DE;
+    --warm-white: #FDFAF7;
+    --stone: #C8B8A2;
+    --stone-dark: #A89880;
+    --ink: #1C1917;
+    --ink-light: #44403C;
+    --ink-muted: #78716C;
+    --ink-faint: #A8A29E;
+    --accent: #8B6F47;
+    --accent-light: #D4B896;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+    --radius: 4px;
+    --radius-lg: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--warm-white);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVIGATION ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(253,250,247,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, padding 0.3s;
+  }
+  nav.scrolled {
+    border-bottom-color: var(--cream-dark);
+    padding: 14px 48px;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { font-style: italic; color: var(--accent); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    background: var(--ink);
+    padding: 9px 22px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--ink);
+    transition: 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--warm-white);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-close {
+    position: absolute;
+    top: 24px; right: 48px;
+    font-size: 28px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-image-side {
+    position: relative;
+    background: var(--cream-dark);
+    overflow: hidden;
+    min-height: 600px;
+  }
+  .hero-img-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #E8DDD0 0%, #C8B8A2 50%, #B5A08A 100%);
+    position: absolute;
+    inset: 0;
+  }
+  .hero-img-placeholder::after {
+    content: 'Vaša fotografia tu';
+    font-family: var(--serif);
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+  }
+  .hero-content-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px 80px 72px;
+    background: var(--warm-white);
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--stone);
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-tagline {
+    font-family: var(--serif);
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.5;
+    margin-bottom: 40px;
+    max-width: 380px;
+  }
+  .hero-desc {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.8;
+    max-width: 360px;
+    margin-bottom: 48px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    background: var(--ink);
+    padding: 14px 32px;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-ghost {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 14px 0;
+    text-decoration: none;
+    border-bottom: 1px solid var(--stone);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .hero-stat-num {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-stat-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ─── SECTION COMMONS ─── */
+  section { padding: 100px 48px; }
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ─── PORTFOLIO ─── */
+  #portfolio { background: var(--cream); }
+  .portfolio-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--stone);
+  }
+  .ptab {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 12px 24px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s;
+    user-select: none;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: var(--sans);
+  }
+  .ptab:hover { color: var(--ink); }
+  .ptab.active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .photo-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--cream-dark);
+  }
+  .photo-item:nth-child(1) { grid-column: span 2; aspect-ratio: 16/9; }
+  .photo-item:nth-child(2) { aspect-ratio: 3/4; }
+  .photo-item:nth-child(3) { aspect-ratio: 3/4; }
+  .photo-item:nth-child(4) { aspect-ratio: 4/3; }
+  .photo-item:nth-child(5) { grid-column: span 2; aspect-ratio: 16/9; }
+  .photo-placeholder-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    background: linear-gradient(135deg, #EDE7DE, #D4C4B0);
+    color: rgba(255,255,255,0.4);
+    font-family: var(--serif);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    position: absolute;
+    inset: 0;
+  }
+  .photo-placeholder-inner svg { opacity: 0.3; }
+  .photo-hover {
+    position: absolute;
+    inset: 0;
+    background: rgba(28,25,23,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .photo-item:hover .photo-hover { opacity: 1; }
+  .photo-hover-content {
+    text-align: center;
+    color: var(--warm-white);
+  }
+  .photo-hover-content span {
+    display: block;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+  .photo-hover-content small {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .portfolio-footer {
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(28,25,23,0.96);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .lightbox.open { display: flex; }
+  .lb-inner {
+    position: relative;
+    max-width: 860px;
+    width: 100%;
+    text-align: center;
+  }
+  .lb-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #3D3530, #2A2420);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .lb-img-hint {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em;
+  }
+  .lb-caption {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--warm-white);
+    margin-bottom: 4px;
+  }
+  .lb-sub {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+  .lb-close {
+    position: absolute;
+    top: -44px; right: 0;
+    color: rgba(255,255,255,0.5);
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    line-height: 1;
+    padding: 8px;
+    transition: color 0.2s;
+  }
+  .lb-close:hover { color: var(--warm-white); }
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.6);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+  }
+  .lb-nav:hover { background: rgba(255,255,255,0.1); color: var(--warm-white); }
+  .lb-prev { left: -60px; }
+  .lb-next { right: -60px; }
+
+  /* ─── SERVICES ─── */
+  #sluzby { background: var(--warm-white); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .service-card {
+    background: var(--cream);
+    border: 1px solid var(--cream-dark);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .service-card:hover {
+    border-color: var(--stone);
+  }
+  .service-card-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--cream-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .service-card-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+  .service-card-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .service-card-desc {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.8;
+    margin-bottom: 28px;
+    flex: 1;
+  }
+  .service-card-price {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .service-card-price-note {
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+  .service-card-cta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-top: 1px solid var(--cream-dark);
+    padding-top: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .service-card-cta:hover { color: var(--accent); }
+  .service-card-cta svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; transition: transform 0.2s; }
+  .service-card-cta:hover svg { transform: translateX(4px); }
+
+  /* ─── ABOUT ─── */
+  #o-mne { background: var(--cream); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-image {
+    position: relative;
+  }
+  .about-img-frame {
+    aspect-ratio: 3/4;
+    background: linear-gradient(145deg, #D4C4B0, #B5A08A);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+  }
+  .about-img-caption {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    background: var(--warm-white);
+    border: 1px solid var(--cream-dark);
+    border-radius: var(--radius-lg);
+    padding: 18px 22px;
+    font-family: var(--serif);
+    font-size: 15px;
+    font-style: italic;
+    color: var(--ink-muted);
+    max-width: 200px;
+    line-height: 1.5;
+  }
+  .about-text-side {}
+  .about-intro {
+    font-family: var(--serif);
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+  .about-body {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.9;
+    margin-bottom: 36px;
+  }
+  .about-body p + p { margin-top: 16px; }
+  .about-signature {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 36px;
+  }
+  .about-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .about-badge {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border: 1px solid var(--stone);
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+
+  /* ─── CONTACT ─── */
+  #kontakt { background: var(--ink); }
+  #kontakt .section-eyebrow { color: var(--stone); }
+  #kontakt .section-title { color: var(--warm-white); }
+  #kontakt .section-title em { color: var(--accent-light); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-form-wrap { }
+  .contact-intro {
+    font-size: 14px;
+    color: rgba(253,250,247,0.5);
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(253,250,247,0.4);
+    margin-bottom: 8px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--warm-white);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(253,250,247,0.2); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--accent-light);
+  }
+  .form-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A8A29E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+  .form-select option { background: #2A2420; color: var(--warm-white); }
+  .form-textarea { resize: vertical; min-height: 120px; line-height: 1.7; }
+  .form-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent);
+    color: var(--warm-white);
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: #7A5F3A; }
+  .contact-info-wrap {
+    padding-top: 8px;
+  }
+  .contact-info-intro {
+    font-size: 14px;
+    color: rgba(253,250,247,0.5);
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+  .contact-detail {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+    align-items: flex-start;
+  }
+  .contact-detail-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .contact-detail-icon svg { width: 15px; height: 15px; stroke: var(--accent-light); fill: none; stroke-width: 1.5; }
+  .contact-detail-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(253,250,247,0.35);
+    margin-bottom: 4px;
+  }
+  .contact-detail-value {
+    font-size: 15px;
+    color: var(--warm-white);
+  }
+  .contact-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 40px 0;
+  }
+  .social-title {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(253,250,247,0.35);
+    margin-bottom: 16px;
+  }
+  .social-links {
+    display: flex;
+    gap: 12px;
+  }
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(253,250,247,0.55);
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    transition: 0.2s;
+  }
+  .social-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+  .social-link:hover { color: var(--warm-white); border-color: rgba(255,255,255,0.25); }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .form-success.visible { display: block; }
+  .form-success-icon {
+    width: 56px; height: 56px;
+    border: 1px solid var(--accent-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .form-success-icon svg { width: 22px; height: 22px; stroke: var(--accent-light); fill: none; stroke-width: 1.5; }
+  .form-success h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--warm-white);
+    margin-bottom: 8px;
+  }
+  .form-success p { font-size: 13px; color: rgba(253,250,247,0.45); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #120F0D;
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 300;
+    color: rgba(253,250,247,0.4);
+    letter-spacing: 0.04em;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(253,250,247,0.2);
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    section { padding: 72px 24px; }
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-image-side { min-height: 50vw; order: -1; }
+    .hero-content-side { padding: 48px 24px; }
+    .hero-stats { gap: 24px; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .photo-item:nth-child(1) { grid-column: span 2; }
+    .photo-item:nth-child(5) { grid-column: span 2; }
+    .services-grid { grid-template-columns: 1fr; gap: 16px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-img-caption { right: 0; bottom: -20px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .lb-prev { left: -12px; }
+    .lb-next { right: -12px; }
+    footer { padding: 24px; }
+  }
+  @media (max-width: 520px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .photo-item:nth-child(1) { grid-column: span 1; }
+    .photo-item:nth-child(5) { grid-column: span 1; }
+    .hero-stats { flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Simona <span>Sarvašová</span></a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#sluzby">Služby</a></li>
+    <li><a href="#o-mne">O mne</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <a href="#kontakt" class="nav-cta">Rezervovať termín</a>
+  <div class="nav-hamburger" id="hamburger" aria-label="Otvoriť menu" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-close" id="menu-close">✕</button>
+  <a href="#portfolio" class="menu-link">Portfólio</a>
+  <a href="#sluzby" class="menu-link">Služby</a>
+  <a href="#o-mne" class="menu-link">O mne</a>
+  <a href="#kontakt" class="menu-link">Kontakt</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-image-side">
+    <div class="hero-img-placeholder"></div>
+  </div>
+  <div class="hero-content-side">
+    <div class="hero-eyebrow">Fotograf · Slovensko</div>
+    <h1 class="hero-name">Zachytávam<br><em>váš príbeh.</em></h1>
+    <p class="hero-tagline">Každý moment si zaslúži byť zachovaný tak, ako naozaj bol.</p>
+    <p class="hero-desc">Profesionálna fotografia pre svadby, portréty a firemné eventy. Pracujem s prirodzeným svetlom, diskrétne a s láskou k detailom.</p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-primary">Prezrieť portfólio</a>
+      <a href="#kontakt" class="btn-ghost">Nezáväzná konzultácia →</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">200+</div>
+        <div class="hero-stat-label">Svadieb</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">10</div>
+        <div class="hero-stat-label">Rokov praxe</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">98%</div>
+        <div class="hero-stat-label">Spokojných klientov</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">Ukážky práce</div>
+      <h2 class="section-title">Portfólio</h2>
+    </div>
+    <a href="#kontakt" class="btn-ghost">Vidieť viac →</a>
+  </div>
+  <div class="portfolio-tabs" id="portfolio-tabs">
+    <button class="ptab active" data-cat="svadby">Svadby</button>
+    <button class="ptab" data-cat="portrety">Portréty</button>
+    <button class="ptab" data-cat="eventy">Eventy</button>
+    <button class="ptab" data-cat="rodinne">Rodinné</button>
+  </div>
+  <div class="portfolio-grid reveal" id="portfolio-grid"></div>
+  <div class="portfolio-footer reveal">
+    <a href="#kontakt" class="btn-ghost">Máte záujem? Napíšte mi →</a>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Náhľad fotografie">
+  <div class="lb-inner">
+    <button class="lb-close" id="lb-close" aria-label="Zavrieť">✕</button>
+    <div class="lb-img"><div class="lb-img-hint">Fotografia</div></div>
+    <div class="lb-caption" id="lb-caption">Svadobná fotografia</div>
+    <div class="lb-sub" id="lb-sub">Svadby · 1 / 5</div>
+    <button class="lb-nav lb-prev" id="lb-prev" aria-label="Predchádzajúca">&#8592;</button>
+    <button class="lb-nav lb-next" id="lb-next" aria-label="Nasledujúca">&#8594;</button>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="sluzby">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">Čo ponúkam</div>
+      <h2 class="section-title">Doplnkové <em>služby</em></h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><line x1="12" y1="13" x2="12" y2="16"/></svg>
+      </div>
+      <div class="service-card-name">Darčekové poukazy</div>
+      <div class="service-card-desc">Darujte zážitok, nie vec. Poukaz na fotenie je ideálny darček na narodeniny, výročie alebo Vianoce — v ľubovoľnej hodnote alebo na konkrétnu službu.</div>
+      <div class="service-card-price">od 50 €</div>
+      <div class="service-card-price-note">Ľubovoľná hodnota · doručenie e-mailom alebo poštou</div>
+      <a class="service-card-cta" href="#kontakt">
+        Objednať poukaz
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8L6 7h12z"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="9" y1="14.5" x2="15" y2="14.5"/></svg>
+      </div>
+      <div class="service-card-name">Tlač fotografií</div>
+      <div class="service-card-desc">Prémiová tlač na fotografický papier, plátno alebo hliník. Formáty od 10×15 cm po veľkoformátové obrazy. Balíme s láskou, doručujeme po celom Slovensku.</div>
+      <div class="service-card-price">od 5 €</div>
+      <div class="service-card-price-note">Za kus · závisí od formátu a materiálu</div>
+      <a class="service-card-cta" href="#kontakt">
+        Zistiť viac
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      </div>
+      <div class="service-card-name">Grafické práce</div>
+      <div class="service-card-desc">Svadobné albumy, fotoknižky, personalizované koláže a digitálne grafiky. Každý album je navrhnutý na mieru — od rozvrhnutia strán po výber typografie.</div>
+      <div class="service-card-price">od 80 €</div>
+      <div class="service-card-price-note">Podľa rozsahu a náročnosti</div>
+      <a class="service-card-cta" href="#kontakt">
+        Objednať
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="o-mne">
+  <div class="about-grid">
+    <div class="about-image reveal">
+      <div class="about-img-frame">Vaša fotografia</div>
+      <div class="about-img-caption">„Najlepší záber vzniká, keď zabudnete, že som tam."</div>
+    </div>
+    <div class="about-text-side reveal">
+      <div class="section-eyebrow">O mne</div>
+      <p class="about-intro">Som Simona — fotografka s vášňou pre tiché, autentické momenty.</p>
+      <div class="about-body">
+        <p>K fotografii som sa dostala pred viac ako desiatimi rokmi, keď som prvýkrát zachytila západ slnka na starý kompakt svojho otca. Odvtedy ma nepustila.</p>
+        <p>Verím, že najkrajšie fotografie nevznikajú v štúdiu — vznikajú vtedy, keď sa ľudia zasmejú naozaj, keď si nevšimnú, že ich fotografujem, keď je všetko dokonale nedokonalé.</p>
+        <p>Pracujem diskrétne, s rešpektom k vašim emóciám. Či ide o svadbu, rodinný portrét alebo firemný event — vždy sa snažím zachytiť to, čo naozaj bolo, nie to, čo malo byť.</p>
+      </div>
+      <div class="about-signature">Simona</div>
+      <div class="about-badges">
+        <span class="about-badge">200+ svadieb</span>
+        <span class="about-badge">10 rokov praxe</span>
+        <span class="about-badge">Sony & Fujifilm</span>
+        <span class="about-badge">Celé Slovensko</span>
+        <span class="about-badge">Prírodné svetlo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="kontakt">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">Začnime spolu</div>
+      <h2 class="section-title">Napíšte <em>mi</em></h2>
+    </div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-form-wrap reveal">
+      <p class="contact-intro">Vyplňte formulár a ozvem sa vám do 24 hodín. Rada zodpoviem všetky otázky a dohodneme si nezáväznú konzultáciu.</p>
+      <form id="contact-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="f-name">Meno a priezvisko</label>
+          <input class="form-input" type="text" id="f-name" name="name" placeholder="Jana Nováková" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-email">E-mail</label>
+          <input class="form-input" type="email" id="f-email" name="email" placeholder="jana@email.sk" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-phone">Telefón (nepovinné)</label>
+          <input class="form-input" type="tel" id="f-phone" name="phone" placeholder="+421 9xx xxx xxx">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-type">Typ fotenia</label>
+          <select class="form-select" id="f-type" name="type">
+            <option value="" disabled selected>Vybrať...</option>
+            <option>Svadba</option>
+            <option>Zásnuby</option>
+            <option>Portrét</option>
+            <option>Rodinné fotenie</option>
+            <option>Tehotenské fotenie</option>
+            <option>Firemný event</option>
+            <option>Tlač / grafika</option>
+            <option>Darčekový poukaz</option>
+            <option>Iné</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-msg">Správa</label>
+          <textarea class="form-textarea" id="f-msg" name="message" placeholder="Napíšte mi o svojej predstave, termíne alebo akejkoľvek otázke..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Odoslať správu</button>
+      </form>
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>Správa odoslaná</h3>
+        <p>Ďakujem za záujem. Ozvem sa vám do 24 hodín.</p>
+      </div>
+    </div>
+    <div class="contact-info-wrap reveal">
+      <p class="contact-info-intro">Preferujete priamy kontakt? Som dostupná cez e-mail, telefón alebo sociálne siete.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-detail-label">E-mail</div>
+          <div class="contact-detail-value">info@simonasarvasova.sk</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.29 6.29l1.86-1.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="contact-detail-label">Telefón</div>
+          <div class="contact-detail-value">+421 900 123 456</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="contact-detail-label">Lokalita</div>
+          <div class="contact-detail-value">Celé Slovensko · Cestovné individuálne</div>
+        </div>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="social-title">Sledujte ma</div>
+      <div class="social-links">
+        <a href="#" class="social-link">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+        <a href="#" class="social-link">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+        <a href="#" class="social-link">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Pinterest
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Simona Sarvašová</div>
+  <div class="footer-copy">© 2025 Simona Sarvašová · Všetky práva vyhradené</div>
+</footer>
+
+<script>
+  // ─── NAV SCROLL ───
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ─── MOBILE MENU ───
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.add('open');
+  });
+  document.getElementById('menu-close').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.remove('open');
+  });
+  document.querySelectorAll('.menu-link').forEach(l => {
+    l.addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('open');
+    });
+  });
+
+  // ─── PORTFOLIO ───
+  const portfolioData = {
+    svadby: [
+      'Prvý tanec', 'Zásnubný prsteň', 'Svadobná torta',
+      'Gratulácie', 'Detaily dekorácie', 'Svadobčania'
+    ],
+    portrety: [
+      'Portrét v prírode', 'Outdoor záber', 'Štúdiový portrét',
+      'Neformálny moment', 'Detailný záber', 'Expresívny portrét'
+    ],
+    eventy: [
+      'Firemný večierok', 'Konferencia', 'Produktové fotenie',
+      'Galavečer', 'Teambuilding', 'Workshop'
+    ],
+    rodinne: [
+      'Rodinný portrét', 'Tehotenské fotenie', 'Newborn',
+      'Deti v prírode', 'Generačný záber', 'Spontánna chvíľa'
+    ]
+  };
+
+  const gradients = [
+    'linear-gradient(135deg,#EDE7DE,#C8B8A2)',
+    'linear-gradient(145deg,#E2D8CC,#BEA98E)',
+    'linear-gradient(120deg,#D9CEBF,#C4AF97)',
+    'linear-gradient(150deg,#E8E0D6,#CABAAA)',
+    'linear-gradient(130deg,#DDD3C6,#BCA88E)',
+    'linear-gradient(140deg,#E4DDD4,#C6B49C)',
+  ];
+
+  let currentCat = 'svadby';
+  let currentIdx = 0;
+
+  function renderPortfolio(cat) {
+    const grid = document.getElementById('portfolio-grid');
+    grid.innerHTML = '';
+    portfolioData[cat].forEach((name, i) => {
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+      item.innerHTML = `
+        <div class="photo-placeholder-inner" style="background:${gradients[i % gradients.length]}">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>${name}</span>
+        </div>
+        <div class="photo-hover">
+          <div class="photo-hover-content">
+            <span>${name}</span>
+            <small>Otvoriť</small>
+          </div>
+        </div>
+      `;
+      item.addEventListener('click', () => openLightbox(cat, i));
+      grid.appendChild(item);
+    });
+  }
+
+  document.getElementById('portfolio-tabs').addEventListener('click', e => {
+    if (!e.target.classList.contains('ptab')) return;
+    document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+    e.target.classList.add('active');
+    currentCat = e.target.dataset.cat;
+    renderPortfolio(currentCat);
+  });
+
+  renderPortfolio('svadby');
+
+  // ─── LIGHTBOX ───
+  const lb = document.getElementById('lightbox');
+
+  function openLightbox(cat, idx) {
+    currentCat = cat;
+    currentIdx = idx;
+    updateLightbox();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateLightbox() {
+    const items = portfolioData[currentCat];
+    document.getElementById('lb-caption').textContent = items[currentIdx];
+    document.getElementById('lb-sub').textContent =
+      currentCat.charAt(0).toUpperCase() + currentCat.slice(1) +
+      ' · ' + (currentIdx + 1) + ' / ' + items.length;
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+  document.getElementById('lb-prev').addEventListener('click', () => {
+    const items = portfolioData[currentCat];
+    currentIdx = (currentIdx - 1 + items.length) % items.length;
+    updateLightbox();
+  });
+  document.getElementById('lb-next').addEventListener('click', () => {
+    const items = portfolioData[currentCat];
+    currentIdx = (currentIdx + 1) % items.length;
+    updateLightbox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+    if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
+  });
+
+  // ─── CONTACT FORM ───
+  document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').classList.add('visible');
+  });
+
+  // ─── SCROLL REVEAL ───
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
